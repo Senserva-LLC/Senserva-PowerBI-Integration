@@ -1,0 +1,8 @@
+Added new custome column:
+
+= Table.AddColumn(#"Renamed Columns", "Risk Score", each [Weight_d] * [Severity])
+
+
+Added new conditional column:
+
+= Table.AddColumn(#"Added Custom", "Risk", each if [Risk Score] <= 120 then "0 - Informational" else if [Risk Score] <= 500 then "1 - Low" else if [Risk Score] <= 2000 then "2 - Medium" else "3 - High")

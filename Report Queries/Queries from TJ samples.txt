@@ -1,0 +1,56 @@
+Ranked Tenants in Need of review by score:
+
+DashboardTest_CL
+| summarize Total_Score=sum(Weight_d) by Tenant_Name=Tenant_TenantDisplayName_s, TenantId=Tenant_TenantId_g, TimeGenerated
+| order by Total_Score desc  
+
+
+
+
+Top 10 Users by Score:
+
+DashboardTest_CL
+| where Group_s == 'User'
+| summarize Total_Score=sum(Weight_d) by Value_s, Home_Tenant=Tenant_TenantDisplayName_s
+| order by Total_Score desc
+| top 10 by Total_Score
+
+
+
+Average Score Over Time (All Tenants):
+
+let min_t = toscalar (DashboardTest_CL
+    | summarize min(TimeGenerated));
+let max_t = toscalar (DashboardTest_CL
+    | summarize max(TimeGenerated));
+DashboardTest_CL
+| make-series num=avg(Weight_d) default=0 on Date_t in range(min_t, max_t, 30m)
+| render timechart 
+
+
+
+Control Over Time:
+
+let min_t = toscalar (DashboardTest_CL
+    | summarize min(TimeGenerated));
+let max_t = toscalar (DashboardTest_CL
+    | summarize max(TimeGenerated));
+DashboardTest_CL
+| make-series num=count() default=0 on Date_t in range(min_t, max_t, 30m) by ControlName_s
+| render timechart 
+
+
+
+
+Controls Ordered by Score:
+
+DashboardTest_CL
+| order by Weight_d
+| project TimeGenerated, ControlName_s, Weight_d, Value_s, Description_s
+| render table 
+
+
+
+
+
+

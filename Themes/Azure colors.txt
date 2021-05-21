@@ -1,0 +1,12 @@
+Name: Blue Cola
+Hex: #008AD7
+RGB: (0, 138, 215)
+CMYK: 1, 0.358, 0, 0.156
+
+
+Azure: #007fff
+Pale Azure
+
+
+Color Combos
+ColorCombo206 with Hex Colors #31659C #639ACE #94BAE7 #4A79A5 #FFFFFF
